@@ -1,6 +1,6 @@
 {
   "name": "dropinblog/laravel-rendered",
-  "description": "Official Laravel package for integrating DropInBlog with your Laravel application",
+  "description": "Official DropInBlog package for integrating DropInBlog with your Laravel application",
   "keywords": [
     "dropinblog",
     "laravel",
