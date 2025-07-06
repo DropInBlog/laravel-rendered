@@ -17,8 +17,11 @@ class DropInBlogServiceProvider extends ServiceProvider
 
         $this->publishes([
             __DIR__.'/../../config/dropinblog.php' => config_path('dropinblog.php'),
+        ], 'config');
+
+        $this->publishes([
             __DIR__.'/../../resources/views' => resource_path('views/vendor/dropinblog'),
-        ]);
+        ], 'views');
 
         Blade::directive('dropInBlogHead', function () {
             return "<?php echo \$__env->yieldPushContent('dropinblog-head'); ?>";

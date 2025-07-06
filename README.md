@@ -39,6 +39,9 @@ return [
     'id' => env('DROPINBLOG_ID'),
     'api_token' => env('DROPINBLOG_API_TOKEN'),
 
+    // Routes Configuration
+    'path' => 'blog',
+
     // View Configuration
     'layout' => 'layouts.app',
     'sections' => [
@@ -55,6 +58,7 @@ return [
 
 - `id`: Your DropInBlog ID
 - `api_token`: Your DropInBlog API token
+- `path`: The base URL path for your blog (defaults to 'blog')
 - `layout`: The layout file that your blog views will extend
 - `sections.content`: The section name in your layout where blog content will be displayed
 - `feed.type`: The default feed type (rss or atom)
@@ -62,7 +66,7 @@ return [
 
 ## Usage
 
-The package automatically registers routes for your blog at `/blog` (configurable). These include:
+The package automatically registers routes for your blog at `/blog` (configurable via the `path` option). These include:
 
 - `/blog` - Blog index
 - `/blog/page/{page}` - Paginated blog index
@@ -79,6 +83,8 @@ The package automatically registers routes for your blog at `/blog` (configurabl
 ### Blade Directives
 
 The package provides several Blade directives to help integrate DropInBlog content:
+
+> **IMPORTANT:** Add the `@dropInBlogHead` directive to your layout's `<head>` section. This will add title, description, styles and other necessary meta tags.
 
 ```blade
 {{-- Include DropInBlog head content --}}
@@ -97,11 +103,11 @@ The package provides several Blade directives to help integrate DropInBlog conte
 
 #### Avoiding Duplicate Head Elements
 
-The `@dropInBlogHead` directive is particularly useful for avoiding duplicate head elements such as `<title>` tags. When DropInBlog renders content, it automatically includes a `<title>` tag and other meta tags in the `headHtml` content.
+The `@dropInBlogHead` directive includes necessary title, description, styles, etc for your blog to function properly.
 
-To avoid duplicates, you should:
+For proper implementation:
 
-1. Place the `@dropInBlogHead` directive in your layout's `<head>` section
+1. **Always** place the `@dropInBlogHead` directive in your layout's `<head>` section
 2. Use the `@isDropInBlog` and `@notDropInBlog` directives to conditionally include your own head elements
 
 Example layout:
@@ -116,10 +122,6 @@ Example layout:
         <title>Your Site Title</title>
         <meta name="description" content="Your site description">
     @endnotDropInBlog
-
-    {{-- Other head elements that should appear on all pages --}}
-    <link rel="stylesheet" href="/css/app.css">
-    <script src="/js/app.js"></script>
 </head>
 ```
 
