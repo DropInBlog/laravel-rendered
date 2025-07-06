@@ -19,7 +19,7 @@ composer require dropinblog/laravel-rendered
 2. Publish the configuration file:
 
 ```bash
-php artisan vendor:publish --provider="DropInBlog\\Laravel\\Providers\\DropInBlogServiceProvider"
+php artisan vendor:publish --provider="DropInBlog\\Laravel\\Providers\\DropInBlogServiceProvider" --tag="config"
 ```
 
 3. Add your DropInBlog credentials to your `.env` file:
@@ -84,7 +84,7 @@ The package automatically registers routes for your blog at `/blog` (configurabl
 
 The package provides several Blade directives to help integrate DropInBlog content:
 
-> **IMPORTANT:** Add the `@dropInBlogHead` directive to your layout's `<head>` section. This will add title, description, styles and other necessary meta tags.
+> **IMPORTANT:** Add the `@dropInBlogHead` directive to your layout's `<head>` section. This will add title, description, styles and more meta tags inside your `<head>`.
 
 ```blade
 {{-- Include DropInBlog head content --}}
@@ -103,12 +103,12 @@ The package provides several Blade directives to help integrate DropInBlog conte
 
 #### Avoiding Duplicate Head Elements
 
-The `@dropInBlogHead` directive includes necessary title, description, styles, etc for your blog to function properly.
+The `@dropInBlogHead` directive adds meta tags title, description, styles and more. Most likely you will already be setting some of these tags in your `<head>`. You can use directives to prevent any duplicates.
 
 For proper implementation:
 
 1. **Always** place the `@dropInBlogHead` directive in your layout's `<head>` section
-2. Use the `@isDropInBlog` and `@notDropInBlog` directives to conditionally include your own head elements
+2. Use the `@isDropInBlog` and `@notDropInBlog` directives to conditionally include or exclude your own head elements
 
 Example layout:
 
@@ -120,7 +120,6 @@ Example layout:
     {{-- Only include your own title on non-blog pages --}}
     @notDropInBlog
         <title>Your Site Title</title>
-        <meta name="description" content="Your site description">
     @endnotDropInBlog
 </head>
 ```
