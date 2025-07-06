@@ -1,0 +1,45 @@
+{
+  "name": "dropinblog/laravel-rendered",
+  "description": "Official Laravel package for integrating DropInBlog with your Laravel application",
+  "keywords": [
+    "dropinblog",
+    "laravel",
+    "blog",
+    "seo"
+  ],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "DropInBlog",
+      "email": "info@dropinblog.com",
+      "homepage": "https://dropinblog.com"
+    }
+  ],
+  "homepage": "https://github.com/dropinblog/laravel-rendered",
+  "support": {
+    "issues": "https://github.com/dropinblog/laravel-rendered/issues",
+    "source": "https://github.com/dropinblog/laravel-rendered"
+  },
+  "require": {
+    "php": "^8.2|^8.3|^8.4",
+    "laravel/framework": "^11.0|^12.0",
+    "guzzlehttp/guzzle": "^7.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "DropInBlog\\Laravel\\": "src/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "DropInBlog\\Laravel\\Providers\\DropInBlogServiceProvider"
+      ]
+    }
+  },
+  "config": {
+    "sort-packages": true
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}
