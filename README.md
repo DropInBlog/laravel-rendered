@@ -38,6 +38,7 @@ return [
     // DropInBlog API Configuration
     'id' => env('DROPINBLOG_ID'),
     'api_token' => env('DROPINBLOG_API_TOKEN'),
+    'response_fields' => 'head_html,body_html,head_items',
 
     // Routes Configuration
     'path' => 'blog',
