@@ -13,22 +13,22 @@ class BlogController extends Controller
 
     public function index(?int $page = 1): Renderable
     {
-        return $this->fetchAndRenderView('/list', 'index', ['page' => $page]);
+        return $this->fetchAndRenderView('/list', 'index', ['page' => $page, 'fields' => config('dropinblog.response_fields')]);
     }
 
     public function category(string $slug, ?int $page = 1): Renderable
     {
-        return $this->fetchAndRenderView("/list/category/{$slug}", 'category', ['page' => $page]);
+        return $this->fetchAndRenderView("/list/category/{$slug}", 'category', ['page' => $page, 'fields' => config('dropinblog.response_fields')]);
     }
 
     public function author(string $slug, ?int $page = 1): Renderable
     {
-        return $this->fetchAndRenderView("/list/author/{$slug}", 'author', ['page' => $page]);
+        return $this->fetchAndRenderView("/list/author/{$slug}", 'author', ['page' => $page, 'fields' => config('dropinblog.response_fields')]);
     }
 
     public function post($slug): Renderable
     {
-        return $this->fetchAndRenderView("/post/{$slug}", 'post');
+        return $this->fetchAndRenderView("/post/{$slug}", 'post', ['fields' => config('dropinblog.response_fields')]);
     }
 
     public function sitemap(): Response
