@@ -5,7 +5,7 @@ This package allows you to easily integrate DropInBlog's rendered content into y
 ## Requirements
 
 - PHP 8.2 or higher
-- Laravel 11.0 or higher
+- Laravel 11.x, 12.x, or 13.x
 - DropInBlog account with API access
 
 ## Installation
