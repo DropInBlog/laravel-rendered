@@ -10,6 +10,8 @@ use Illuminate\Http\Response;
 
 class BlogController extends Controller
 {
+    // Bump together with the release tag
+    private const PACKAGE_SOURCE = 'laravel@1.1.2';
 
     public function index(?int $page = 1): Renderable
     {
@@ -62,29 +64,8 @@ class BlogController extends Controller
 
         return Http::withHeaders([
             'Authorization' => 'Bearer ' . $apiToken,
-            'X-Dib-Package' => $this->getPackageSource(),
+            'X-Dib-Package' => self::PACKAGE_SOURCE,
         ])->withoutVerifying()->baseUrl(env('DROPINBLOG_API_URL', 'https://api.dropinblog.com') . '/v2/blog/' . $blogId . '/rendered');
-    }
-
-    private function getPackageSource(): string
-    {
-        $version = null;
-
-        if (class_exists(\Composer\InstalledVersions::class)
-            && \Composer\InstalledVersions::isInstalled('dropinblog/laravel-rendered')) {
-            try {
-                $version = \Composer\InstalledVersions::getPrettyVersion('dropinblog/laravel-rendered');
-            } catch (\Throwable) {
-                $version = null;
-            }
-        }
-
-        if ($version !== null) {
-            // The API only accepts versions matching [0-9A-Za-z.\-+], max 32 chars
-            $version = substr(preg_replace('/[^0-9A-Za-z.\-+]/', '', ltrim($version, 'v')), 0, 32);
-        }
-
-        return $version ? "laravel@{$version}" : 'laravel';
     }
 
     private function fetchAndRenderView(string $endpoint, string $viewName, array $params = []): Renderable
