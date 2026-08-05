@@ -11,7 +11,7 @@ use Illuminate\Http\Response;
 class BlogController extends Controller
 {
     // Bump together with the release tag
-    private const PACKAGE_SOURCE = 'laravel@1.1.2';
+    private const PACKAGE_SOURCE = 'laravel@1.2.0';
 
     public function index(?int $page = 1): Renderable
     {
@@ -56,14 +56,17 @@ class BlogController extends Controller
     private function getHttpClient()
     {
         $blogId = config('dropinblog.id');
-        $apiToken = config('dropinblog.api_token');
+        // Config files published before the rename still define api_token, and
+        // upgrading the package doesn't rewrite them — fall back so existing
+        // installs keep authenticating without republishing the config.
+        $apiKey = config('dropinblog.api_key') ?: config('dropinblog.api_token');
 
-        if (empty($blogId) || empty($apiToken)) {
-            abort(500, 'DropInBlog configuration is incomplete. Please set DROPINBLOG_ID and DROPINBLOG_API_TOKEN in your .env file.');
+        if (empty($blogId) || empty($apiKey)) {
+            abort(500, 'DropInBlog configuration is incomplete. Please set DROPINBLOG_ID and DROPINBLOG_API_KEY in your .env file. If you are upgrading and have a cached config, republish it with --tag=config and run config:clear.');
         }
 
         return Http::withHeaders([
-            'Authorization' => 'Bearer ' . $apiToken,
+            'Authorization' => 'Bearer ' . $apiKey,
             'X-Dib-Package' => self::PACKAGE_SOURCE,
         ])->withoutVerifying()->baseUrl(env('DROPINBLOG_API_URL', 'https://api.dropinblog.com') . '/v2/blog/' . $blogId . '/rendered');
     }

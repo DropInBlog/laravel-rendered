@@ -26,7 +26,7 @@ php artisan vendor:publish --provider="DropInBlog\\Laravel\\Providers\\DropInBlo
 
 ```
 DROPINBLOG_ID=your-dropinblog-id
-DROPINBLOG_API_TOKEN=your-dropinblog-api-token
+DROPINBLOG_API_KEY=your-dropinblog-api-key
 ```
 
 ## Configuration
@@ -37,7 +37,7 @@ The package publishes a configuration file at `config/dropinblog.php` with the f
 return [
     // DropInBlog API Configuration
     'id' => env('DROPINBLOG_ID'),
-    'api_token' => env('DROPINBLOG_API_TOKEN'),
+    'api_key' => env('DROPINBLOG_API_KEY'),
     'response_fields' => 'head_html,body_html,head_items',
 
     // Routes Configuration
@@ -58,12 +58,23 @@ return [
 ```
 
 - `id`: Your DropInBlog ID
-- `api_token`: Your DropInBlog API token
+- `api_key`: Your DropInBlog API key
 - `path`: The base URL path for your blog (defaults to 'blog')
 - `layout`: The layout file that your blog views will extend
 - `sections.content`: The section name in your layout where blog content will be displayed
 - `feed.type`: The default feed type (rss or atom)
 - `feed.limit`: The default number of items in feeds
+
+### Upgrading from 1.1.x
+
+The credential is now `api_key` / `DROPINBLOG_API_KEY`. Existing installs keep working without changes — the old `api_token` config key and `DROPINBLOG_API_TOKEN` variable are still read.
+
+If you rename the variable in your `.env`, republish the config so it picks up the new key:
+
+```bash
+php artisan vendor:publish --provider="DropInBlog\\Laravel\\Providers\\DropInBlogServiceProvider" --tag="config" --force
+php artisan config:clear
+```
 
 ## Usage
 
