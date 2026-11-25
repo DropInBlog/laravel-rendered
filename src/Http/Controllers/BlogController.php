@@ -11,7 +11,7 @@ use Illuminate\Http\Response;
 class BlogController extends Controller
 {
     // Bump together with the release tag
-    private const PACKAGE_SOURCE = 'laravel@1.2.0';
+    private const PACKAGE_SOURCE = 'laravel@1.2.1';
 
     public function index(?int $page = 1): Renderable
     {
@@ -68,7 +68,7 @@ class BlogController extends Controller
         return Http::withHeaders([
             'Authorization' => 'Bearer ' . $apiKey,
             'X-Dib-Package' => self::PACKAGE_SOURCE,
-        ])->withoutVerifying()->baseUrl(env('DROPINBLOG_API_URL', 'https://api.dropinblog.com') . '/v2/blog/' . $blogId . '/rendered');
+        ])->baseUrl(env('DROPINBLOG_API_URL', 'https://api.dropinblog.com') . '/v2/blog/' . $blogId . '/rendered');
     }
 
     private function fetchAndRenderView(string $endpoint, string $viewName, array $params = []): Renderable
